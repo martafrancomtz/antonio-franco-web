@@ -36,9 +36,35 @@
 .bar-nav{
   position:absolute; top:clamp(16px,2.5vw,36px); right:var(--side);        /* 50 px */
   display:flex; gap:3.2vw;
-  transition:gap 600ms var(--ease), right 600ms var(--ease);
+  transition:gap 600ms var(--ease), right 600ms var(--ease),
+             opacity 700ms ease, transform 1000ms cubic-bezier(.2,.72,.24,1);
   pointer-events:auto;
 }
+
+/* la entrada de la home
+   La firma aparece grande en el centro, espera y viaja a su
+   esquina; entonces baja el menú. Lo mueve site.js.          */
+.bar-sig{
+  transform-origin:0 0;
+  transition:transform 1250ms cubic-bezier(.62,.02,.16,1);
+}
+.bar.intro{ mix-blend-mode:normal; }                 /* blanca de verdad mientras está en el centro */
+.bar.intro .bar-nav{ opacity:0; transform:translateY(-160%); pointer-events:none; }
+/* hasta que arranca el script, nada de la barra a la vista (evita un parpadeo en la esquina) */
+html.pre .bar-sig, html.pre .bar-nav{ opacity:0; }
+
+/* la pantalla de carga: fondo negro bajo la firma grande. Cuando la
+   firma sale hacia su esquina (.leaving), el negro se desvanece.   */
+.loader{
+  position:fixed; inset:0; z-index:55;               /* por debajo de la barra (60) */
+  background:#0B0B0B;
+  pointer-events:none; visibility:hidden; opacity:0;
+}
+html.pre .loader, html.is-intro .loader{ visibility:visible; opacity:1; }
+html.is-intro.leaving .loader{ opacity:0; transition:opacity 900ms ease; }
+/* la firma no cambia de color al terminar la entrada: se queda blanca
+   hasta que la barra sabe que está sobre el hero (.on-dark) */
+.bar.solid{ mix-blend-mode:normal; }
 /* en el hero el menú se abre sobre la columna oscura */
 .bar.on-dark .bar-nav{ gap:8vw; right:4.24vw; }
 .bar-nav a{
@@ -104,6 +130,10 @@
 .bar-nav a::after,  .site-foot a::after,  .mail::after,  .pager a::after,  .more a::after,  .view button::after{
   content:""; position:absolute; left:0; right:0; bottom:0;          /* ~.16em bajo la base de las letras */
   height:2px; background:currentColor; pointer-events:none;
+  /* las dos líneas siempre en su propia capa: así se pintan igual en
+     reposo y en el hover (si no, con pantallas escaladas la de reposo
+     sale más gruesa y la animada más fina) */
+  will-change:transform; backface-visibility:hidden;
 }
 /* línea de reposo */
 .bar-nav a::before, .site-foot a::before, .mail::before, .pager a::before, .more a::before, .view button::before{

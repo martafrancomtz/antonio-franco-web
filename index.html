@@ -9,11 +9,13 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Inter:wght@400..600&display=swap">
 <link rel="stylesheet" href="site.css">
 <link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add("pre")</script>
 </head>
 <body>
+<div class="loader" aria-hidden="true"></div>
 
 <!-- barra fija: firma + menú -->
-<header class="bar" id="bar">
+<header class="bar" id="bar" data-intro>
   <a class="bar-sig" href="index.html"><img src="img/firma-blanca.png" alt="Antonio Franco — home"></a>
   <nav class="bar-nav" aria-label="Principal">
     <a href="index.html" aria-current="page">Home</a>
@@ -41,9 +43,9 @@
 <section class="story" aria-labelledby="story-t">
   <h2 class="sec-t" id="story-t">— How it started</h2>
   <div class="story-body">
-    <p>My mother signed up for a garment-making class with some friends. A few weeks in, she asked me to help her with the basic technical pattern drawing — I was studying engineering, so the drawing was familiar ground. I helped her, and I realised that learning about patterns and garments would be one of the most stimulating things I could do.</p>
+    <p>My mother signed up for a garment-making class with some friends. A few weeks in, she asked me to help her with the basic technical pattern drawing — I was studying industrial engineering, so the drawing was familiar ground. I helped her, and I realised that learning about patterns and garments would be one of the most stimulating things I could do.</p>
     <p>At the beginning everything was pure intuition, and it turned out surprisingly well. That gave me the confidence to start proper pattern-making courses with a teacher who is both exceptional and deeply experienced.</p>
-    <p>Since then I have made eight pieces. Two are my own patterns; the other six are technical studies after garments I admire — I take the garment apart on paper, redraw the pattern, and build it again.</p>
+    <p>Since then, alongside my industrial engineering degree at the ETSI, University of Seville — I am now in my fourth year — I have made eight pieces. Two are my own patterns; the other six are technical studies after garments I admire — I take the garment apart on paper, redraw the pattern, and build it again.</p>
   </div>
 </section>
 
@@ -56,27 +58,35 @@
       <figure class="layer"><img src="img/crossbody-bag/web/whatsapp-2.jpg" alt="Crossbody Bag"></figure>
       <figure class="layer"><img src="img/crossbody-bag/web/img-2793.jpg" alt="Crossbody Bag" loading="lazy"></figure>
       <figure class="layer"><img src="img/crossbody-bag/web/whatsapp-0.jpg" alt="Crossbody Bag" loading="lazy"></figure>
+      <figure class="layer"><img src="img/crossbody-bag/web/img-2748.jpg" alt="Crossbody Bag" loading="lazy"></figure>
       <figure class="layer"><img src="img/coat-after-dior/web/img-6648.jpg" alt="Coat after Dior" loading="lazy"></figure>
       <figure class="layer"><img src="img/coat-after-dior/web/p1050870.jpg" alt="Coat after Dior" loading="lazy"></figure>
       <figure class="layer"><img src="img/coat-after-dior/web/img-6575.jpg" alt="Coat after Dior" loading="lazy"></figure>
+      <figure class="layer"><img src="img/coat-after-dior/web/p1050867.jpg" alt="Coat after Dior" loading="lazy"></figure>
       <figure class="layer"><img src="img/black-jacket/web/p1050883.jpg" alt="Black Jacket" loading="lazy"></figure>
       <figure class="layer"><img src="img/black-jacket/web/img-4844.jpg" alt="Black Jacket" loading="lazy"></figure>
       <figure class="layer"><img src="img/black-jacket/web/p1050891.jpg" alt="Black Jacket" loading="lazy"></figure>
+      <figure class="layer"><img src="img/black-jacket/web/p1050880.jpg" alt="Black Jacket" loading="lazy"></figure>
       <figure class="layer"><img src="img/traje-de-flamenca/web/aa2765d4-2e94-4e02-9c74-6e9ac127ab46.jpg" alt="Traje de Flamenca" loading="lazy"></figure>
       <figure class="layer"><img src="img/traje-de-flamenca/web/ff22a392-f7df-41d5-8b0b-a188bcf9a181.jpg" alt="Traje de Flamenca" loading="lazy"></figure>
       <figure class="layer"><img src="img/traje-de-flamenca/web/da9e6cd4-a27c-49f6-b260-95e6464ade7f.jpg" alt="Traje de Flamenca" loading="lazy"></figure>
+      <figure class="layer"><img src="img/traje-de-flamenca/web/img-7344.jpg" alt="Traje de Flamenca" loading="lazy"></figure>
       <figure class="layer"><img src="img/bomber-jacket/web/img-3866.jpg" alt="Bomber Jacket" loading="lazy"></figure>
       <figure class="layer"><img src="img/bomber-jacket/web/img-4287.jpg" alt="Bomber Jacket" loading="lazy"></figure>
       <figure class="layer"><img src="img/bomber-jacket/web/img-4289.jpg" alt="Bomber Jacket" loading="lazy"></figure>
+      <figure class="layer"><img src="img/bomber-jacket/web/img-4247.jpg" alt="Bomber Jacket" loading="lazy"></figure>
       <figure class="layer"><img src="img/pintuck-top/web/img-5065.jpg" alt="Pintuck Top" loading="lazy"></figure>
       <figure class="layer"><img src="img/pintuck-top/web/39bf23f2-a325-4a5c-9046-7a1f1c9cab97.jpg" alt="Pintuck Top" loading="lazy"></figure>
       <figure class="layer"><img src="img/pintuck-top/web/img-5052.jpg" alt="Pintuck Top" loading="lazy"></figure>
+      <figure class="layer"><img src="img/pintuck-top/web/img-5003.jpg" alt="Pintuck Top" loading="lazy"></figure>
       <figure class="layer"><img src="img/leather-holdall/web/img-2107.jpg" alt="Leather Holdall" loading="lazy"></figure>
       <figure class="layer"><img src="img/leather-holdall/web/img-8355.jpg" alt="Leather Holdall" loading="lazy"></figure>
       <figure class="layer"><img src="img/leather-holdall/web/c8ad2798-4122-4129-9dcb-4c82bdb81c74.jpg" alt="Leather Holdall" loading="lazy"></figure>
+      <figure class="layer"><img src="img/leather-holdall/web/img-6416.jpg" alt="Leather Holdall" loading="lazy"></figure>
       <figure class="layer"><img src="img/long-coat/web/img-9947.jpg" alt="Long Coat" loading="lazy"></figure>
       <figure class="layer"><img src="img/long-coat/web/img-9282.jpg" alt="Long Coat" loading="lazy"></figure>
       <figure class="layer"><img src="img/long-coat/web/img-9988.jpg" alt="Long Coat" loading="lazy"></figure>
+      <figure class="layer"><img src="img/long-coat/web/img-9970.jpg" alt="Long Coat" loading="lazy"></figure>
     </a>
 
     <div class="texts" id="texts">
@@ -89,9 +99,9 @@
           <p class="cat">Bag
 /Own pattern
 2023</p>
-          <p class="now">Currently — Learning JavaScript,
-one interaction at a time.
-Reading far too much about type on screen.</p>
+          <p class="now">Cotton canvas, silk lining.
+Two weeks, drafted from scratch —
+the first thing I ever made.</p>
         </div>
       </article>
       <article class="txt" data-name="Coat after Dior" data-href="work/coat-after-dior/">
@@ -103,9 +113,9 @@ Reading far too much about type on screen.</p>
           <p class="cat">Outerwear
 /Study after
 2024</p>
-          <p class="now">Currently — Learning JavaScript,
-one interaction at a time.
-Reading far too much about type on screen.</p>
+          <p class="now">Wool-blend tweed, canvas interlining,
+enamel buttons. Five weeks.
+The check matched across both fronts.</p>
         </div>
       </article>
       <article class="txt" data-name="Black Jacket" data-href="work/jacket-after-armani/">
@@ -117,9 +127,9 @@ Reading far too much about type on screen.</p>
           <p class="cat">Tailoring
 /Study after
 2024</p>
-          <p class="now">Currently — Learning JavaScript,
-one interaction at a time.
-Reading far too much about type on screen.</p>
+          <p class="now">Black wool bouclé, printed lining.
+Three weeks. Cropped at the high hip:
+structure without stiffness.</p>
         </div>
       </article>
       <article class="txt" data-name="Traje de Flamenca" data-href="work/traje-de-flamenca/">
@@ -130,10 +140,10 @@ Reading far too much about type on screen.</p>
         <div class="foot">
           <p class="cat">Couture
 /Own pattern
-2025</p>
-          <p class="now">Currently — Learning JavaScript,
-one interaction at a time.
-Reading far too much about type on screen.</p>
+2024–2025</p>
+          <p class="now">Nine metres of cotton poplin,
+winter 2024 to spring 2025. Six panels,
+three circular tiers, worn at the April feria.</p>
         </div>
       </article>
       <article class="txt" data-name="Bomber Jacket" data-href="work/bomber-after-zara/">
@@ -145,9 +155,9 @@ Reading far too much about type on screen.</p>
           <p class="cat">Outerwear
 /Study after
 2024</p>
-          <p class="now">Currently — Learning JavaScript,
-one interaction at a time.
-Reading far too much about type on screen.</p>
+          <p class="now">Heavy upholstery cloth. Six weeks.
+The sleeves were made twice —
+the piece I learned most from.</p>
         </div>
       </article>
       <article class="txt" data-name="Pintuck Top" data-href="work/top-after-jacquemus/">
@@ -159,9 +169,9 @@ Reading far too much about type on screen.</p>
           <p class="cat">Shirting
 /Study after
 2024</p>
-          <p class="now">Currently — Learning JavaScript,
-one interaction at a time.
-Reading far too much about type on screen.</p>
+          <p class="now">Off-white cotton-linen. Two weeks.
+Tucks stitched first, pattern cut after:
+no margin for error.</p>
         </div>
       </article>
       <article class="txt" data-name="Leather Holdall" data-href="work/bag-after-mulberry/">
@@ -173,9 +183,9 @@ Reading far too much about type on screen.</p>
           <p class="cat">Bag
 /Study after
 2024</p>
-          <p class="now">Currently — Learning JavaScript,
-one interaction at a time.
-Reading far too much about type on screen.</p>
+          <p class="now">Black cowhide, tan leather base,
+brass hardware. Three months.
+Every panel tested in card first.</p>
         </div>
       </article>
       <article class="txt" data-name="Long Coat" data-href="work/long-coat-after-saint-laurent/">
@@ -186,10 +196,10 @@ Reading far too much about type on screen.</p>
         <div class="foot">
           <p class="cat">Outerwear
 /Study after
-2026</p>
-          <p class="now">Currently — Learning JavaScript,
-one interaction at a time.
-Reading far too much about type on screen.</p>
+2026 — in progress</p>
+          <p class="now">Teal wool melton, viscose lining.
+Still on the table. Mid-calf length,
+a faced hem to take the bulk out.</p>
         </div>
       </article>
     </div>
@@ -221,14 +231,12 @@ Reading far too much about type on screen.</p>
 <footer class="site-foot" id="contact">
   <div class="top">
     <a href="mailto:a.afrapue148@gmail.com">a.afrapue148@gmail.com</a>
-    <!-- EDITA: enlaces reales -->
-    <p class="social"><a href="#">LinkedIn</a> — <a href="#">Instagram</a></p>
+    <p class="social"><a href="https://www.instagram.com/anfranco_02/" target="_blank" rel="noopener">Instagram</a></p>
   </div>
   <div class="bottom">
     <a href="tel:+34695818589">+34 695 81 85 89</a>
     <p class="copy">© 2026 Marta Franco. Designed and built in Seville.</p>
-    <!-- EDITA: ruta al PDF del CV -->
-    <a href="#">Curriculum Vitae (PDF)</a>
+    <a href="img/CV%20AFP%20ENGLISH%202026_1.02.pdf" target="_blank" rel="noopener">Curriculum Vitae (PDF)</a>
   </div>
 </footer>
 

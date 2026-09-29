@@ -56,14 +56,15 @@
     r.addEventListener('click', function(){
       if (touchOnly && !busy) setHot(hot === r ? null : r);
     });
-    [].forEach.call(r.querySelectorAll('.tile'), function(t){
-      t.tabIndex = 0;
-      /* en táctil el foco llega antes que el click y lo cancelaría:
-         el teclado solo activa la fila si el foco es visible */
-      t.addEventListener('focus', function(){
-        if (!touchOnly && !busy && t.matches(':focus-visible')) setHot(r);
+    /* con el teclado se salta de proyecto en proyecto por el enlace de
+       la fila, y la fila se ilumina igual que con el ratón */
+    var link = r.querySelector('.row-link');
+    if (link){
+      link.addEventListener('focus', function(){
+        if (!touchOnly && !busy && link.matches(':focus-visible')) setHot(r);
       });
-    });
+      link.addEventListener('blur', function(){ if (hot === r) setHot(null); });
+    }
   });
   work.addEventListener('pointerleave', function(e){
     if (e.pointerType === 'touch') return;

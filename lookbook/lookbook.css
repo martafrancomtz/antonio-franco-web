@@ -139,10 +139,10 @@ img, video{ display:block; max-width:100%; }
 .work.is-list.list-in .meta{ opacity:1; }
 .meta p{ margin:0; white-space:nowrap; }
 
-/* en List toda la fila es un enlace a la ficha del proyecto */
-.row-link{ display:none; }
-.work.is-list .row-link{ display:block; position:absolute; inset:0; z-index:2; }
-.work.is-list .row-link:focus-visible{ outline:2px solid var(--ink); outline-offset:-2px; }
+/* en Grid y en List, toda la fila (fotos y pie) lleva a la ficha del proyecto;
+   el hover sigue funcionando porque lo escucha la fila entera */
+.row-link{ display:block; position:absolute; inset:0; z-index:2; cursor:pointer; }
+.row-link:focus-visible{ outline:2px solid var(--ink); outline-offset:-2px; }
 
 @media (max-width:700px){
   :root{ --t20:.78rem; --key:30vw; --kgap:14px; }

@@ -100,6 +100,7 @@ img{ display:block; max-width:100%; }
 .ttl .u::after{
   content:""; position:absolute; left:0; right:0; bottom:0;
   height:2px; background:currentColor; pointer-events:none;
+  will-change:transform; backface-visibility:hidden;   /* mismo grosor en reposo y en el hover */
   transform-origin:right; transform:scaleX(0);
   transition:transform .4s ease .1s;
 }
@@ -292,3 +293,12 @@ img{ display:block; max-width:100%; }
   .how-item{ grid-template-columns:1fr; gap:.6rem; min-height:0; margin-bottom:2rem; }
   .how-item dt{ max-width:none; }
 }
+
+/* la entrada: mientras la firma está en el centro, los textos
+   del hero esperan; aparecen cuando la firma llega (site.js) */
+.hero-tag, .hero-foot{
+  transition:opacity 900ms ease, transform 1100ms cubic-bezier(.2,.72,.24,1);
+}
+html.pre .hero-tag, html.pre .hero-foot,
+html.is-intro .hero-tag, html.is-intro .hero-foot{ opacity:0; transform:translateY(24px); }
+html.is-intro .hero-foot{ transition-delay:120ms; }
