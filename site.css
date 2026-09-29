@@ -117,52 +117,96 @@ html.is-intro.leaving .loader{ opacity:0; transition:opacity 900ms ease; }
 .site-foot a:focus-visible{ outline:2px solid currentColor; outline-offset:3px; }
 
 /* la línea de los botones
-   Dos líneas bajo el texto. La de reposo (::before) se va por
-   la derecha y la nueva (::after) entra desde la izquierda; al
-   salir, al revés. Si el botón no tiene línea en reposo
-   (--rest:0), la línea entra desde la izquierda y se va por la
-   derecha. Va en currentColor, así funciona también en la barra. */
-.bar-nav a, .site-foot a, .mail, .pager a, .more a, .view button{
-  position:relative; text-decoration:none;
+   Se dibuja como fondo del propio texto, así subraya cada renglón
+   por separado aunque el texto se parta en dos líneas, y se pinta
+   siempre igual de gruesa.
+   · Sin línea en reposo: al pasar el ratón entra desde la
+     izquierda; al salir, se va por la derecha.
+   · Con línea en reposo (la página actual, los enlaces de texto):
+     al pasar el ratón se va por la derecha y entra una nueva desde
+     la izquierda.                                                 */
+:is(.bar-nav a, .site-foot a, .mail, .more a, .view button, .pager a > span, .ttl .u){
+  text-decoration:none;
+  background-image:linear-gradient(currentColor, currentColor);
+  background-repeat:no-repeat;
+  background-size:0% 2px;
+  background-position:100% calc(100% - .06em);
+  -webkit-box-decoration-break:clone; box-decoration-break:clone;
+  transition:background-size .4s ease .1s;
 }
-.more a{ display:inline-block; }
-.bar-nav a::before, .site-foot a::before, .mail::before, .pager a::before, .more a::before, .view button::before,
-.bar-nav a::after,  .site-foot a::after,  .mail::after,  .pager a::after,  .more a::after,  .view button::after{
-  content:""; position:absolute; left:0; right:0; bottom:0;          /* ~.16em bajo la base de las letras */
-  height:2px; background:currentColor; pointer-events:none;
-  /* las dos líneas siempre en su propia capa: así se pintan igual en
-     reposo y en el hover (si no, con pantallas escaladas la de reposo
-     sale más gruesa y la animada más fina) */
-  will-change:transform; backface-visibility:hidden;
+:is(.bar-nav a, .site-foot a, .mail, .more a, .view button):is(:hover, :focus-visible),
+.pager a:is(:hover, :focus-visible) > span,
+.ttl a:is(:hover, :focus-visible) .u{
+  background-size:100% 2px; background-position-x:0%;
 }
-/* línea de reposo */
-.bar-nav a::before, .site-foot a::before, .mail::before, .pager a::before, .more a::before, .view button::before{
-  transform-origin:left; transform:scaleX(var(--rest, 0));
-  transition:transform .4s ease .2s;
+/* con línea en reposo */
+.bar-nav a[aria-current="page"], .more a{ background-size:100% 2px; background-position-x:0%; }
+.bar-nav a[aria-current="page"]:is(:hover, :focus-visible),
+.more a:is(:hover, :focus-visible){ animation:v1-line .8s ease; }
+@keyframes v1-line{
+  0%   { background-size:100% 2px; background-position-x:100%; }
+  45%  { background-size:0% 2px;   background-position-x:100%; }
+  55%  { background-size:0% 2px;   background-position-x:0%; }
+  100% { background-size:100% 2px; background-position-x:0%; }
 }
-/* línea nueva */
-.bar-nav a::after, .site-foot a::after, .mail::after, .pager a::after, .more a::after, .view button::after{
-  transform-origin:right; transform:scaleX(0);
-  transition:transform .4s ease .1s;
-}
-:is(.bar-nav a, .site-foot a, .mail, .pager a, .more a, .view button):is(:hover, :focus-visible)::before{
-  transform-origin:right; transform:scaleX(0); transition-delay:0s;
-}
-:is(.bar-nav a, .site-foot a, .mail, .pager a, .more a, .view button):is(:hover, :focus-visible)::after{
-  transform-origin:left; transform:scaleX(1);
-}
-/* los que llevan la línea puesta: la página actual y los enlaces de texto */
-.bar-nav a[aria-current="page"], .more a{ --rest:1; }
 @media (prefers-reduced-motion:reduce){
-  :is(.bar-nav a, .site-foot a, .mail, .pager a, .more a, .view button)::before,
-  :is(.bar-nav a, .site-foot a, .mail, .pager a, .more a, .view button)::after{ transition:none; }
+  :is(.bar-nav a, .site-foot a, .mail, .more a, .view button, .pager a > span, .ttl .u){ transition:none; animation:none !important; }
 }
 
+/* menú hamburguesa (pantallas pequeñas)
+   El botón lo pone site.js. Abierto, el menú ocupa la pantalla con el
+   fondo oscuro del hero y los enlaces en grande.                     */
+.bar-burger{ display:none; }
+
 @media (max-width:760px){
-  .bar-sig{ width:clamp(84px,26vw,130px); }
-  .bar-nav, .bar.on-dark .bar-nav{ top:clamp(14px,4vw,22px); right:clamp(14px,4vw,22px); gap:clamp(.7rem,3vw,1.1rem); }
-  .bar-nav a{ font-size:clamp(.8rem,3.6vw,1rem); }
-  .bar.on-dark .bar-nav a{ text-shadow:0 0 12px rgba(0,0,0,.6); }
+  .bar-sig{ position:absolute; z-index:2; width:clamp(84px,26vw,130px); }
+
+  .bar-burger{
+    display:block; position:absolute; z-index:2;
+    top:clamp(12px,3.6vw,20px); right:clamp(12px,3.6vw,20px);
+    width:44px; height:44px; padding:0; margin:0;
+    background:none; border:0; color:inherit; cursor:pointer;
+    pointer-events:auto; -webkit-tap-highlight-color:transparent;
+    view-transition-name:bar-burger;
+    transition:opacity 600ms ease;
+  }
+  .bar-burger span{
+    position:absolute; left:9px; right:9px; height:2px; background:currentColor;
+    transition:transform 450ms var(--ease), top 450ms var(--ease), opacity 250ms ease;
+  }
+  .bar-burger span:nth-child(1){ top:16px; }
+  .bar-burger span:nth-child(2){ top:26px; }
+  .bar.menu-open .bar-burger span:nth-child(1){ top:21px; transform:rotate(45deg); }
+  .bar.menu-open .bar-burger span:nth-child(2){ top:21px; transform:rotate(-45deg); }
+  .bar-burger:focus-visible{ outline:2px solid currentColor; outline-offset:2px; }
+  .bar.intro .bar-burger, html.pre .bar-burger{ opacity:0; pointer-events:none; }
+
+  /* el menú: pantalla completa, oscura como el hero */
+  .bar-nav, .bar.on-dark .bar-nav{
+    position:fixed; inset:0; z-index:1;
+    display:flex; flex-direction:column; justify-content:center; align-items:flex-start;
+    gap:clamp(.6rem,3vh,1.4rem); padding:0 clamp(18px,7vw,40px);
+    background:var(--hero-dark, #1E1E1E); color:#F7F5F3;
+    opacity:0; visibility:hidden; transform:none;
+    transition:opacity 450ms ease, visibility 0s linear 450ms;
+  }
+  .bar.menu-open{ mix-blend-mode:normal; }                   /* sin negativo mientras está abierto */
+  .bar.menu-open .bar-nav{
+    opacity:1; visibility:visible; pointer-events:auto;
+    transition:opacity 450ms ease, visibility 0s;
+  }
+  .bar-nav a, .bar.on-dark .bar-nav a{
+    font-family:var(--f-display); font-weight:500; font-variation-settings:"opsz" 14;
+    font-size:clamp(2.2rem,11vw,3.4rem); line-height:1.1; text-shadow:none;
+    opacity:0; transform:translateY(30%);
+    transition:opacity 500ms ease, transform 700ms var(--ease);
+    view-transition-name:none;
+  }
+  .bar.menu-open .bar-nav a{ opacity:1; transform:none; }
+  .bar.menu-open .bar-nav a:nth-child(1){ transition-delay:80ms; }
+  .bar.menu-open .bar-nav a:nth-child(2){ transition-delay:150ms; }
+  .bar.menu-open .bar-nav a:nth-child(3){ transition-delay:220ms; }
+  html.menu-lock, html.menu-lock body{ overflow:hidden; }
   .site-foot{ padding:4rem 18px 28px; }
   .site-foot .top, .site-foot .bottom{ grid-template-columns:1fr; gap:.5rem; }
   .site-foot .top > :last-child, .site-foot .bottom > :last-child,

@@ -93,19 +93,7 @@ img{ display:block; max-width:100%; }
   -webkit-tap-highlight-color:transparent;
 }
 .ttl a:focus-visible{ outline:2px solid var(--ink); outline-offset:6px; }
-/* la línea de los botones, solo bajo el texto:
-   la de reposo no existe, así que entra desde la izquierda y al salir
-   se va por la derecha, igual que en el menú y el footer */
-.ttl .u{ position:relative; display:inline-block; }
-.ttl .u::after{
-  content:""; position:absolute; left:0; right:0; bottom:0;
-  height:2px; background:currentColor; pointer-events:none;
-  will-change:transform; backface-visibility:hidden;   /* mismo grosor en reposo y en el hover */
-  transform-origin:right; transform:scaleX(0);
-  transition:transform .4s ease .1s;
-}
-.ttl a:hover .u::after, .ttl a:focus-visible .u::after{ transform-origin:left; transform:scaleX(1); }
-@media (prefers-reduced-motion:reduce){ .ttl .u::after{ transition:none; } }
+/* la línea del hover va en site.css, solo bajo el texto */
 /* la flecha solo asoma al señalar el título */
 .arw{
   display:inline-block; overflow:hidden;
@@ -153,7 +141,9 @@ img{ display:block; max-width:100%; }
 /* vertical: la foto arriba, el texto debajo */
 @media (max-width:860px){
   :root{ --tx:clamp(18px,5vw,40px); }
-  .frame{ inset:0 0 auto 0; width:100%; height:52svh; }
+  .frame{ inset:0 0 auto 0; width:100%; height:52svh; z-index:3; }
+  /* el texto, al subir, pasa por detrás de la foto y no por encima */
+  .texts{ z-index:2; }
   .info{ top:58svh; }
   .idx{ font-size:1.3rem; }
   .ttl{ font-size:1.6rem; }

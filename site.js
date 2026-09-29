@@ -10,6 +10,38 @@
        · si se llega desde otra página con View Transition, el estado
          se pone antes de pintar y la transición lleva el menú;
        · si no, el menú arranca compacto y se abre después.        */
+/* menú hamburguesa (pantallas pequeñas; lo muestra site.css) */
+(function(){
+  var bar = document.getElementById('bar');
+  var nav = bar && bar.querySelector('.bar-nav');
+  if (!nav) return;
+  nav.id = nav.id || 'menu';
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'bar-burger';
+  btn.setAttribute('aria-controls', nav.id);
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-label', 'Menu');
+  btn.innerHTML = '<span></span><span></span>';
+  bar.appendChild(btn);
+
+  var small = window.matchMedia('(max-width: 760px)');
+  function set(open){
+    bar.classList.toggle('menu-open', open);
+    document.documentElement.classList.toggle('menu-lock', open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+    if (open){ var first = nav.querySelector('a'); if (first) setTimeout(function(){ first.focus({preventScroll:true}); }, 300); }
+  }
+  btn.addEventListener('click', function(){ set(!bar.classList.contains('menu-open')); });
+  nav.addEventListener('click', function(e){ if (e.target.closest('a')) set(false); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && bar.classList.contains('menu-open')){ set(false); btn.focus(); }
+  });
+  function onChange(){ if (!small.matches) set(false); }
+  if (small.addEventListener) small.addEventListener('change', onChange);
+})();
+
 (function(){
   var bar = document.getElementById('bar');
   if (!bar) return;
