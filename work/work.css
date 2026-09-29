@@ -98,11 +98,7 @@ img, video{ display:block; max-width:100%; }
 }
 .facts p{ margin:0 0 .8em; font-size:var(--t16); line-height:1.21; }
 .facts p:last-child{ margin-bottom:0; }
-.facts .more a{
-  color:inherit; text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:.14em;
-  transition:text-decoration-color 240ms ease;
-}
-.facts .more a:hover{ text-decoration-color:transparent; }
+.facts .more a{ color:inherit; }
 
 .spec{ margin:0; display:grid; grid-template-columns:7.5vw 1fr; row-gap:1.25vw; font-size:var(--t16); line-height:1.21; }
 .spec dt{ font-weight:700; }
@@ -117,10 +113,7 @@ img, video{ display:block; max-width:100%; }
 }
 .pager a{
   display:table; color:inherit;
-  text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:.14em;
-  text-decoration-color:transparent; transition:text-decoration-color 240ms ease;
 }
-.pager a:hover{ text-decoration-color:currentColor; }
 .pager a:focus-visible, .facts a:focus-visible{ outline:2px solid currentColor; outline-offset:4px; }
 .pager .prev{ margin-left:auto; margin-right:calc(100% - 55.49vw + var(--edge)); }   /* acaba en x = 799 */
 .pager .next{ margin-top:.8vw; margin-left:calc(43.75vw - var(--edge)); }           /* empieza en x = 630 */

@@ -43,13 +43,33 @@
 .bar.on-dark .bar-nav{ gap:8vw; right:4.24vw; }
 .bar-nav a{
   font-family:var(--f-ui); font-weight:400; font-size:var(--t24);
-  color:inherit; text-decoration:none;
-  text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:.14em;
-  text-decoration-color:transparent; transition:text-decoration-color 240ms ease;
+  color:inherit;
+  transition:font-weight 600ms var(--ease);
 }
 .bar.on-dark .bar-nav a{ font-weight:500; }
-.bar-nav a[aria-current="page"], .bar-nav a:hover{ text-decoration-color:currentColor; }
 .bar-nav a:focus-visible, .bar-sig:focus-visible{ outline:2px solid currentColor; outline-offset:4px; }
+
+/* al cambiar de página, la firma y el menú viajan de un sitio a otro
+   (View Transitions entre documentos: Chrome/Edge y Safari. En los
+   demás navegadores la página cambia sin más y el menú se anima al
+   cargar, ver site.js.)                                             */
+@view-transition{ navigation:auto; }
+.bar-sig{ view-transition-name:bar-sig; }
+.bar-nav a:nth-child(1){ view-transition-name:nav-1; }
+.bar-nav a:nth-child(2){ view-transition-name:nav-2; }
+.bar-nav a:nth-child(3){ view-transition-name:nav-3; }
+::view-transition-group(nav-1),
+::view-transition-group(nav-2),
+::view-transition-group(nav-3),
+::view-transition-group(bar-sig){
+  animation-duration:600ms; animation-timing-function:cubic-bezier(.22,.72,.2,1);
+  mix-blend-mode:difference;                   /* se sigue leyendo sobre claro y sobre oscuro */
+}
+::view-transition-old(root), ::view-transition-new(root){ animation-duration:360ms; }
+@media (prefers-reduced-motion:reduce){
+  @view-transition{ navigation:none; }
+  .bar-nav, .bar-nav a{ transition:none; }
+}
 
 /* footer */
 .site-foot{
@@ -67,12 +87,46 @@
 .site-foot .top > :last-child, .site-foot .bottom > :last-child{ grid-column:3; justify-self:end; text-align:right; }
 .site-foot .bottom .copy{ grid-column:2; }
 .site-foot p{ margin:0; }
-.site-foot a{
-  color:inherit; text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:.14em;
-  text-decoration-color:transparent; transition:text-decoration-color 240ms ease;
-}
-.site-foot a:hover{ text-decoration-color:currentColor; }
+.site-foot a{ color:inherit; width:fit-content; }   /* la línea del hover, solo bajo el texto */
 .site-foot a:focus-visible{ outline:2px solid currentColor; outline-offset:3px; }
+
+/* la línea de los botones
+   Dos líneas bajo el texto. La de reposo (::before) se va por
+   la derecha y la nueva (::after) entra desde la izquierda; al
+   salir, al revés. Si el botón no tiene línea en reposo
+   (--rest:0), la línea entra desde la izquierda y se va por la
+   derecha. Va en currentColor, así funciona también en la barra. */
+.bar-nav a, .site-foot a, .mail, .pager a, .more a, .view button{
+  position:relative; text-decoration:none;
+}
+.more a{ display:inline-block; }
+.bar-nav a::before, .site-foot a::before, .mail::before, .pager a::before, .more a::before, .view button::before,
+.bar-nav a::after,  .site-foot a::after,  .mail::after,  .pager a::after,  .more a::after,  .view button::after{
+  content:""; position:absolute; left:0; right:0; bottom:0;          /* ~.16em bajo la base de las letras */
+  height:2px; background:currentColor; pointer-events:none;
+}
+/* línea de reposo */
+.bar-nav a::before, .site-foot a::before, .mail::before, .pager a::before, .more a::before, .view button::before{
+  transform-origin:left; transform:scaleX(var(--rest, 0));
+  transition:transform .4s ease .2s;
+}
+/* línea nueva */
+.bar-nav a::after, .site-foot a::after, .mail::after, .pager a::after, .more a::after, .view button::after{
+  transform-origin:right; transform:scaleX(0);
+  transition:transform .4s ease .1s;
+}
+:is(.bar-nav a, .site-foot a, .mail, .pager a, .more a, .view button):is(:hover, :focus-visible)::before{
+  transform-origin:right; transform:scaleX(0); transition-delay:0s;
+}
+:is(.bar-nav a, .site-foot a, .mail, .pager a, .more a, .view button):is(:hover, :focus-visible)::after{
+  transform-origin:left; transform:scaleX(1);
+}
+/* los que llevan la línea puesta: la página actual y los enlaces de texto */
+.bar-nav a[aria-current="page"], .more a{ --rest:1; }
+@media (prefers-reduced-motion:reduce){
+  :is(.bar-nav a, .site-foot a, .mail, .pager a, .more a, .view button)::before,
+  :is(.bar-nav a, .site-foot a, .mail, .pager a, .more a, .view button)::after{ transition:none; }
+}
 
 @media (max-width:760px){
   .bar-sig{ width:clamp(84px,26vw,130px); }

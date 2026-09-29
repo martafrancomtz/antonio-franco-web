@@ -51,10 +51,7 @@ body{
 .mail{
   font-weight:500; font-size:var(--t24);
   color:inherit;
-  text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:.14em;
-  text-decoration-color:transparent; transition:text-decoration-color 240ms ease;
 }
-.mail:hover{ text-decoration-color:currentColor; }
 .mail:focus-visible{ outline:2px solid currentColor; outline-offset:3px; }
 
 @media (max-width:860px){

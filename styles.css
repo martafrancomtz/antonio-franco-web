@@ -93,6 +93,18 @@ img{ display:block; max-width:100%; }
   -webkit-tap-highlight-color:transparent;
 }
 .ttl a:focus-visible{ outline:2px solid var(--ink); outline-offset:6px; }
+/* la línea de los botones, solo bajo el texto:
+   la de reposo no existe, así que entra desde la izquierda y al salir
+   se va por la derecha, igual que en el menú y el footer */
+.ttl .u{ position:relative; display:inline-block; }
+.ttl .u::after{
+  content:""; position:absolute; left:0; right:0; bottom:0;
+  height:2px; background:currentColor; pointer-events:none;
+  transform-origin:right; transform:scaleX(0);
+  transition:transform .4s ease .1s;
+}
+.ttl a:hover .u::after, .ttl a:focus-visible .u::after{ transform-origin:left; transform:scaleX(1); }
+@media (prefers-reduced-motion:reduce){ .ttl .u::after{ transition:none; } }
 /* la flecha solo asoma al señalar el título */
 .arw{
   display:inline-block; overflow:hidden;
