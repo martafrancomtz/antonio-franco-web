@@ -1,0 +1,148 @@
+/* 
+   ANTONIO FRANCO: ficha de proyecto (Figma "Desktop 117", 1440 px)
+   Título y etiqueta · carrusel de fotos y vídeos · textos ·
+   anterior / siguiente. Todo en Bricolage Grotesque.
+
+   El carrusel: en pantalla grande la tira se queda clavada y,
+   al bajar con la rueda, avanza hacia la izquierda; también se
+   arrastra con el ratón. Cada foto crece al acercarse al centro
+   y encoge al alejarse (lo mueve work.js).
+   En pantalla pequeña la info va arriba y la tira debajo, con
+   su propio scroll lateral.
+ */
+*{ box-sizing:border-box; }
+body{
+  margin:0; background:var(--bg); color:#000;
+  font-family:var(--f-display); font-weight:500; font-variation-settings:"opsz" 14;
+  -webkit-font-smoothing:antialiased;
+}
+img, video{ display:block; max-width:100%; }
+.visually-hidden{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+
+/* los huecos que faltan por escribir (textos-piezas-FINAL.md) */
+.todo{
+  font-family:var(--f-ui); font-weight:400; font-size:.86em;
+  color:#8a6d00; background:rgba(255,214,10,.22);
+  box-decoration-break:clone; -webkit-box-decoration-break:clone;
+}
+
+.piece{
+  --edge: 1.53vw;                             /* 22 px a los lados */
+  --col-gap: .97vw;                           /* 14 px entre fotos */
+  padding-bottom:6.2vw;
+}
+
+/* el tramo clavado */
+.reel{ position:relative; }                   /* su alto lo pone work.js */
+.reel-pin{
+  position:sticky; top:0;
+  height:100svh; min-height:520px;
+  display:flex; flex-direction:column;
+  overflow:hidden;
+}
+
+/* cabecera: título a la izquierda, etiqueta a la derecha */
+.piece-head{
+  display:flex; justify-content:space-between; align-items:baseline; gap:2rem;
+  padding:min(16.18vw, 29svh) var(--edge) 0;  /* el título empieza en y = 233 */
+  margin-bottom:1.18vw;
+}
+.piece-head h1{
+  margin:0; font-weight:500; text-transform:uppercase;
+  font-size:var(--t48); line-height:1.21; letter-spacing:0;
+}
+.piece-sub{ margin:.4rem 0 0; font-weight:400; font-size:var(--t16); }
+.piece-tag{
+  margin:0; display:flex; gap:2.4vw; white-space:nowrap;
+  font-size:var(--t24); text-transform:uppercase;
+}
+
+/* la tira */
+.track-wrap{
+  flex:1; min-height:0; position:relative;
+  padding-bottom:min(4.2vw, 6svh);
+  cursor:grab; touch-action:pan-y;
+  -webkit-user-select:none; user-select:none;
+}
+.track-wrap.grabbing{ cursor:grabbing; }
+.track{
+  display:flex; gap:var(--col-gap); align-items:center;
+  height:100%; padding:0 var(--edge);
+  width:max-content;
+  will-change:transform;
+}
+.item{
+  position:relative; flex:none; margin:0;
+  height:100%; aspect-ratio:3/4;
+  background:#e6e5e1; overflow:hidden;
+  transform-origin:50% 50%;
+  will-change:transform;
+}
+.item.is-video{ aspect-ratio:9/16; }
+.item img, .item video{
+  width:100%; height:100%; object-fit:cover;
+  pointer-events:none;
+  opacity:0; transition:opacity 600ms ease;
+}
+.item img.ready, .item video.ready{ opacity:1; }
+
+/* textos, en las mismas cuatro columnas que las fotos de la maqueta */
+.facts{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:3.5vw var(--col-gap);
+  padding:9vw var(--edge) 0;
+}
+.facts section{ max-width:19vw; }             /* 273 px */
+.facts h2{
+  margin:0 0 1.35vw;
+  font-weight:500; font-size:var(--t24); line-height:1.21;
+}
+.facts p{ margin:0 0 .8em; font-size:var(--t16); line-height:1.21; }
+.facts p:last-child{ margin-bottom:0; }
+.facts .more a{
+  color:inherit; text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:.14em;
+  transition:text-decoration-color 240ms ease;
+}
+.facts .more a:hover{ text-decoration-color:transparent; }
+
+.spec{ margin:0; display:grid; grid-template-columns:7.5vw 1fr; row-gap:1.25vw; font-size:var(--t16); line-height:1.21; }
+.spec dt{ font-weight:700; }
+.spec dd{ margin:0; font-weight:500; }
+
+/* anterior / siguiente, escalonados en el centro */
+.pager{
+  margin-top:11.8vw; padding:0 var(--edge);
+  font-weight:360; font-variation-settings:"opsz" 12;
+  font-size:clamp(1.4rem,2.5vw,2.4rem);       /* 36 px */
+  line-height:1.21;
+}
+.pager a{
+  display:table; color:inherit;
+  text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:.14em;
+  text-decoration-color:transparent; transition:text-decoration-color 240ms ease;
+}
+.pager a:hover{ text-decoration-color:currentColor; }
+.pager a:focus-visible, .facts a:focus-visible{ outline:2px solid currentColor; outline-offset:4px; }
+.pager .prev{ margin-left:auto; margin-right:calc(100% - 55.49vw + var(--edge)); }   /* acaba en x = 799 */
+.pager .next{ margin-top:.8vw; margin-left:calc(43.75vw - var(--edge)); }           /* empieza en x = 630 */
+
+/* pantalla pequeña: la info arriba y la tira debajo */
+@media (max-width:860px){
+  .piece{ --edge:18px; --col-gap:10px; display:flex; flex-direction:column; padding-bottom:3rem; }
+  .reel, .reel-pin{ display:contents; }
+  .piece-head{ order:1; flex-direction:column; gap:.4rem; padding-top:clamp(110px,30vw,150px); margin-bottom:0; }
+  .facts{ order:2; grid-template-columns:1fr; gap:2rem; padding-top:2.2rem; }
+  .facts section{ max-width:none; }
+  .facts h2{ margin-bottom:.7rem; }
+  .spec{ grid-template-columns:7.5rem 1fr; row-gap:.6rem; }
+  .track-wrap{
+    order:3; flex:none; height:68svh; margin-top:2.5rem; padding-bottom:0;
+    overflow-x:auto; overflow-y:hidden; touch-action:pan-x pan-y;
+    scrollbar-width:none; overscroll-behavior-x:contain;
+  }
+  .track-wrap::-webkit-scrollbar{ display:none; }
+  .pager{ order:4; margin-top:3.5rem; }
+  .pager .prev, .pager .next{ margin:0 0 .8rem; }
+}
+@media (prefers-reduced-motion:reduce){
+  .item img, .item video{ transition:none; }
+}

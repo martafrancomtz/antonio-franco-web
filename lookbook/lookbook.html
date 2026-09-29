@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lookbook — Antonio Franco</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="lookbook.css">
+</head>
+<body>
+<!-- barra fija: firma + menú -->
+<header class="bar" id="bar">
+  <a class="bar-sig" href="../index.html"><img src="../img/firma-blanca.png" alt="Antonio Franco — home"></a>
+  <nav class="bar-nav" aria-label="Principal">
+    <a href="../index.html">Home</a>
+    <a href="lookbook.html" aria-current="page">Lookbook</a>
+    <a href="../contact/contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="intro">
+  <p class="lede">Eight pieces, 2023–2026. Two are my own patterns. The other six are technical studies after garments I admire, made to understand how they are built — not reproductions for sale.</p>
+  <h1 class="ttl">Lookbook — PORTFOLIO<br>Antonio Franco</h1>
+</div>
+
+<div class="view" id="view" role="group" aria-label="Vista">
+  <button type="button" data-v="grid" aria-pressed="true">Grid</button>
+  <button type="button" data-v="list" aria-pressed="false">List</button>
+</div>
+
+<!-- Cada fila: 4 fotos. La que lleva .key es la importante: es la que
+   se queda en su sitio al pasar a List.
+   --w / --h: tamaño de la foto respecto al cuadro; --x / --y: cuánto
+   se desplaza. Son los encuadres de la maqueta de Figma. -->
+<main class="work" id="work">
+  <article class="row">
+    <div class="tiles">
+      <figure class="tile key" style="--h:1.335;--y:.168"><img src="../img/crossbody-bag/web/whatsapp-2.jpg" alt="Navy crossbody bag worn over a jacket" loading="lazy" draggable="false"></figure>
+      <figure class="tile" style="--w:1.743;--h:2.324;--x:.145;--y:.971"><img src="../img/crossbody-bag/web/img-2793.jpg" alt="Mirror shot with the navy bag in a lift" loading="lazy" draggable="false"></figure>
+      <figure class="tile" style="--h:1.335;--y:.306"><img src="../img/crossbody-bag/web/whatsapp-0.jpg" alt="Fitting room, bag on the shoulder" loading="lazy" draggable="false"></figure>
+      <figure class="tile" style="--h:1.329;--y:.232"><img src="../img/crossbody-bag/web/img-2708.jpg" alt="Cut pieces and tools on the table" loading="lazy" draggable="false"></figure>
+    </div>
+    <div class="cap"><span>Crossbody bag</span><span>Own pattern</span><span>2023</span></div>
+    <div class="meta"><p>Crossbody bag</p><p>Own pattern</p><p>2023</p></div>
+    <a class="row-link" href="../work/first-crossbody-bag/" aria-label="Crossbody bag"></a>
+  </article>
+
+  <article class="row">
+    <div class="tiles">
+      <figure class="tile" style="--h:1.335;--y:.101"><img src="../img/coat-after-dior/web/p1050870.jpg" alt="Yellow tweed coat on the stand" loading="lazy" draggable="false"></figure>
+      <figure class="tile" style="--h:1.329;--y:.293"><img src="../img/coat-after-dior/web/img-6575.jpg" alt="At the sewing machine with the tweed" loading="lazy" draggable="false"></figure>
+      <figure class="tile key" style="--w:1.265;--h:1.687;--y:.356"><img src="../img/coat-after-dior/web/img-6648.jpg" alt="Long yellow tweed coat, mirror" loading="lazy" draggable="false"></figure>
+      <figure class="tile" style="--h:1.329;--y:.153"><img src="../img/coat-after-dior/web/p1050867.jpg" alt="Tweed detail with enamel button" loading="lazy" draggable="false"></figure>
+    </div>
+    <div class="cap"><span>Coat — study after Dior</span><span>Study after</span><span>2024</span></div>
+    <div class="meta"><p>Coat — study after Dior</p><p>Study after</p><p>2024</p></div>
+    <a class="row-link" href="../work/coat-after-dior/" aria-label="Coat — study after Dior"></a>
+  </article>
+
+  <article class="row">
+    <div class="tiles">
+      <figure class="tile" style="--w:1.335;--x:.168"><img src="../img/black-jacket/web/p1050891.jpg" alt="Button and printed lining detail" loading="lazy" draggable="false"></figure>
+      <figure class="tile key" style="--w:1.061;--h:1.413;--y:.254"><img src="../img/black-jacket/web/p1050883.jpg" alt="Black boucle jacket on the stand" loading="lazy" draggable="false"></figure>
+      <figure class="tile" style="--w:1.087;--h:1.934;--y:.676"><video src="../img/black-jacket/IMG_4837.mp4" muted loop playsinline preload="none" aria-label="The black jacket, video"></video></figure>
+      <figure class="tile" style="--w:1.344;--h:1.792;--x:.098;--y:.301"><img src="../img/black-jacket/web/img-4844.jpg" alt="Charcoal jacket on the stand" loading="lazy" draggable="false"></figure>
+    </div>
+    <div class="cap"><span>Black jacket — study after Emporio Armani</span><span>Study after</span><span>2024</span></div>
+    <div class="meta"><p>Black jacket — study after Emporio Armani</p><p>Study after</p><p>2024</p></div>
+    <a class="row-link" href="../work/jacket-after-armani/" aria-label="Black jacket — study after Emporio Armani"></a>
+  </article>
+
+  <article class="row">
+    <div class="tiles">
+      <figure class="tile" style="--w:1.22;--h:1.624;--x:.162;--y:.624"><img src="../img/traje-de-flamenca/web/ff22a392-f7df-41d5-8b0b-a188bcf9a181.jpg" alt="White flamenco dress, full length" loading="lazy" draggable="false"></figure>
+      <figure class="tile" style="--h:1.777;--y:.358"><img src="../img/traje-de-flamenca/web/da9e6cd4-a27c-49f6-b260-95e6464ade7f.jpg" alt="Skirt tiers in movement" loading="lazy" draggable="false"></figure>
+      <figure class="tile key" style="--w:1.413;--h:1.884;--x:.234;--y:.396"><img src="../img/traje-de-flamenca/web/aa2765d4-2e94-4e02-9c74-6e9ac127ab46.jpg" alt="Flamenco dress with green shawl" loading="lazy" draggable="false"></figure>
+      <figure class="tile"><video src="../img/traje-de-flamenca/IMG_4753.mp4" muted loop playsinline preload="none" aria-label="The flamenco dress in movement, video"></video></figure>
+    </div>
+    <div class="cap"><span>Traje de flamenca</span><span>Own pattern</span><span>2025</span></div>
+    <div class="meta"><p>Traje de flamenca</p><p>Own pattern</p><p>2025</p></div>
+    <a class="row-link" href="../work/traje-de-flamenca/" aria-label="Traje de flamenca"></a>
+  </article>
+
+  <article class="row">
+    <div class="tiles">
+      <figure class="tile" style="--h:1.332;--y:.332"><img src="../img/bomber-jacket/web/img-3866.jpg" alt="Green tweed bomber, worn in the street" loading="lazy" draggable="false"></figure>
+      <figure class="tile" style="--w:1.003;--h:1.338;--y:.09"><img src="../img/bomber-jacket/web/img-4287.jpg" alt="Green tweed bomber, flat" loading="lazy" draggable="false"></figure>
+      <figure class="tile" style="--h:1.332;--y:.166"><img src="../img/bomber-jacket/web/img-4289.jpg" alt="Collar with the Franco label" loading="lazy" draggable="false"></figure>
+      <figure class="tile key" style="--w:1.003;--h:2.17;--y:.448"><img src="../img/bomber-jacket/web/img-6515.jpg" alt="Wearing the bomber, from above" loading="lazy" draggable="false"></figure>
+    </div>
+    <div class="cap"><span>Bomber jacket — study after Zara</span><span>Study after</span><span>2024</span></div>
+    <div class="meta"><p>Bomber jacket — study after Zara</p><p>Study after</p><p>2024</p></div>
+    <a class="row-link" href="../work/bomber-after-zara/" aria-label="Bomber jacket — study after Zara"></a>
+  </article>
+
+  <article class="row">
+    <div class="tiles">
+      <figure class="tile" style="--h:1.777;--y:.092"><img src="../img/pintuck-top/web/39bf23f2-a325-4a5c-9046-7a1f1c9cab97.jpg" alt="Pintucked top on the stand, back" loading="lazy" draggable="false"></figure>
+      <figure class="tile key" style="--h:2.165;--y:.263"><img src="../img/pintuck-top/web/img-5065.jpg" alt="Top worn, mirror" loading="lazy" draggable="false"></figure>
+      <figure class="tile" style="--h:1.332;--y:.168"><img src="../img/pintuck-top/web/img-5003.jpg" alt="Pattern piece on the cutting mat" loading="lazy" draggable="false"></figure>
+      <figure class="tile" style="--h:1.332;--y:.303"><img src="../img/pintuck-top/web/img-5052.jpg" alt="Raw linen two piece, corridor" loading="lazy" draggable="false"></figure>
+    </div>
+    <div class="cap"><span>Top — study after Jacquemus</span><span>Study after</span><span>2024</span></div>
+    <div class="meta"><p>Top — study after Jacquemus</p><p>Study after</p><p>2024</p></div>
+    <a class="row-link" href="../work/top-after-jacquemus/" aria-label="Top — study after Jacquemus"></a>
+  </article>
+
+  <article class="row">
+    <div class="tiles">
+      <figure class="tile key" style="--h:2.168;--y:.584"><img src="../img/leather-holdall/web/img-8355.jpg" alt="Holdall on gravel" loading="lazy" draggable="false"></figure>
+      <figure class="tile" style="--w:2.113;--h:1.188;--x:.361"><img src="../img/leather-holdall/web/c8ad2798-4122-4129-9dcb-4c82bdb81c74.jpg" alt="Showing the finished holdall" loading="lazy" draggable="false"></figure>
+      <figure class="tile" style="--w:1.231;--h:1.642;--x:.116;--y:.642"><img src="../img/leather-holdall/web/img-2107.jpg" alt="Carrying the holdall" loading="lazy" draggable="false"></figure>
+      <figure class="tile" style="--h:1.332;--y:.269"><img src="../img/leather-holdall/web/img-6553.jpg" alt="Leather tag in the hand" loading="lazy" draggable="false"></figure>
+    </div>
+    <div class="cap"><span>Bag — study after Mulberry</span><span>Study after</span><span>2024</span></div>
+    <div class="meta"><p>Bag — study after Mulberry</p><p>Study after</p><p>2024</p></div>
+    <a class="row-link" href="../work/bag-after-mulberry/" aria-label="Bag — study after Mulberry"></a>
+  </article>
+
+  <article class="row">
+    <div class="tiles">
+      <figure class="tile" style="--h:1.329;--y:.214"><img src="../img/long-coat/web/img-9988.jpg" alt="Measuring the teal coat" loading="lazy" draggable="false"></figure>
+      <figure class="tile" style="--w:1.332;--h:1.775;--x:.168;--y:.529"><img src="../img/long-coat/web/img-9282.jpg" alt="At the machine, late" loading="lazy" draggable="false"></figure>
+      <figure class="tile" style="--h:1.329;--y:.165"><img src="../img/long-coat/web/img-9974.jpg" alt="Collar and shoulder detail" loading="lazy" draggable="false"></figure>
+      <figure class="tile key" style="--h:1.332;--x:-.014;--y:.11"><img src="../img/long-coat/web/img-9947.jpg" alt="Teal coat on the stand" loading="lazy" draggable="false"></figure>
+    </div>
+    <div class="cap"><span>Long coat — study after Saint Laurent</span><span>Study after</span><span>2026</span></div>
+    <div class="meta"><p>Long coat — study after Saint Laurent</p><p>Study after</p><p>2026</p></div>
+    <a class="row-link" href="../work/long-coat-after-saint-laurent/" aria-label="Long coat — study after Saint Laurent"></a>
+  </article>
+</main>
+
+<!-- FOOTER (Figma · Desktop 123) -->
+<footer class="site-foot" id="contact">
+  <div class="top">
+    <a href="mailto:a.afrapue148@gmail.com">a.afrapue148@gmail.com</a>
+    <!-- EDITA: enlaces reales -->
+    <p class="social"><a href="#">LinkedIn</a> — <a href="#">Instagram</a></p>
+  </div>
+  <div class="bottom">
+    <a href="tel:+34695818589">+34 695 81 85 89</a>
+    <p class="copy">© 2026 Marta Franco. Designed and built in Seville.</p>
+    <!-- EDITA: ruta al PDF del CV -->
+    <a href="#">Curriculum Vitae (PDF)</a>
+  </div>
+</footer>
+
+<script src="../site.js"></script>
+<script src="lookbook.js"></script>
+</body>
+</html>

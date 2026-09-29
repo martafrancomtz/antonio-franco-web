@@ -1,0 +1,170 @@
+/* 
+   ANTONIO FRANCO: Lookbook
+   Figma "Desktop 28" (Grid) y "Desktop 110" (List), 1440 px.
+   Grid: ocho filas de cuatro fotos. Al pasar el ratón por una
+   fila, crece un poco, su pie se reparte de punta a punta y el
+   resto de la página se queda en blanco y negro.
+   List: de cada fila solo queda la foto importante (.key), en
+   su misma columna, pequeña y con el texto al lado.
+ */
+:root{
+  --bg:    #F7F6F3;
+  --ink:   #191919;
+  --muted: #8C8C8C;
+  --pad:   clamp(10px, .9vw, 16px);          /* 13 px */
+  --gap:   clamp(6px, .69vw, 12px);          /* 10 px */
+  --t20:   clamp(.78rem, 1.389vw, 1.35rem);  /* 20 px */
+  --key:   12.5vw;                           /* foto en List: 180 px */
+  --kgap:  2.36vw;                           /* foto ↔ texto en List: 34 px */
+  --ease:  cubic-bezier(.22,.72,.2,1);
+  --f-ui: "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --f-display: "Bricolage Grotesque", "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+*{ box-sizing:border-box; }
+body{
+  margin:0; background:var(--bg); color:#000;
+  font-family:var(--f-ui); -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img, video{ display:block; max-width:100%; }
+
+/* intro a la izquierda y título a la derecha, a la misma altura */
+.intro{
+  display:flex; justify-content:space-between; align-items:flex-start; gap:2rem;
+  margin:25.07vw 3.47vw 0;                   /* top 361 px; la barra es fija */
+}
+.lede{
+  margin:0; width:34.3vw;                    /* 494 px */
+  font-family:var(--f-ui); font-weight:400;
+  font-size:var(--t20); line-height:1.21;
+}
+.ttl{
+  margin:0; text-align:right;
+  font-family:var(--f-display); font-weight:600;
+  font-variation-settings:"opsz" 14;
+  font-size:clamp(1.3rem,3.333vw,3.2rem);    /* 48 px */
+  line-height:1.21; letter-spacing:0; color:#000;
+}
+
+/* Grid / List */
+.view{ display:flex; gap:1.1vw; margin:6.5vw 3.47vw 1.25vw; }
+.view button{
+  font-family:var(--f-display); font-variation-settings:"opsz" 14;
+  font-size:var(--t20); font-weight:400; color:#000;
+  background:none; border:0; padding:0; cursor:pointer;
+}
+.view button[aria-pressed="true"]{ font-weight:700; }
+.view button:focus-visible{ outline:2px solid var(--ink); outline-offset:3px; }
+
+/* las filas (Grid) */
+.work{ padding:0 var(--pad) clamp(4rem,10vh,8rem); }
+.row{ position:relative; margin-bottom:2.78vw; border-color:transparent; }                  /* 40 px */
+.row:last-child{ margin-bottom:0; }
+
+.tiles{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:var(--gap);
+  transform-origin:50% 50%;
+  transition:transform 700ms var(--ease);
+}
+.tile{
+  margin:0; position:relative; overflow:hidden;
+  aspect-ratio:1/1; background:#e6e5e1;
+  cursor:pointer; -webkit-tap-highlight-color:transparent;
+}
+/* el encuadre de Figma: la foto es más grande que el cuadro y se desplaza */
+.tile img, .tile video{
+  position:absolute; max-width:none;
+  width:calc(var(--w,1) * 100%); height:calc(var(--h,1) * 100%);
+  left:calc(var(--x,0) * -100%); top:calc(var(--y,0) * -100%);
+  object-fit:cover;
+  transition:transform 900ms var(--ease), filter 520ms ease;
+  -webkit-user-select:none; user-select:none; -webkit-user-drag:none;
+}
+
+/* el pie de fila: de agrupado a repartido */
+.cap{
+  display:flex; justify-content:space-between; gap:3.8vw;
+  width:var(--nat,auto);
+  margin-top:.28vw;
+  font-size:var(--t20); font-weight:600; line-height:1.21;
+  transition:width 780ms var(--ease), color 400ms ease, opacity 350ms ease;
+}
+.cap span{ white-space:nowrap; }
+
+/* el hover: la fila crece y el resto se va a blanco y negro */
+.row.hot .tiles{ transform:scale(1.014); }
+.row.hot .tile img, .row.hot .tile video{ transform:scale(1.055); }
+.row.hot .cap{ width:100%; }
+.work.hovering .row:not(.hot) .cap{ color:var(--muted); }
+.work.hovering .row:not(.hot) .tile img,
+.work.hovering .row:not(.hot) .tile video{ filter:grayscale(1) contrast(.96) brightness(1.02); }
+.tile:focus-visible{ outline:2px solid var(--ink); outline-offset:3px; }
+.work.busy .row.hot .tiles{ transform:none; }
+
+/* el paso de una vista a otra
+   1 · se apagan las fotos que no son la importante (.fade)
+   2 · cambia la maqueta y la importante encoge en su sitio (lo mueve el JS)
+   3 · aparecen las líneas y el texto (.list-in)                         */
+.tile:not(.key){ transition:opacity 350ms ease; }
+.work.fade .tile:not(.key), .work.fade .cap{ opacity:0; }
+
+/* List */
+.meta{ display:none; }
+.work.is-list .row{
+  margin:0; padding:1.25vw 0;                                     /* 18 px */
+  border-top:1px solid transparent;
+  transition:border-color 400ms ease;
+}
+.work.is-list .row:last-child{ border-bottom:1px solid transparent; }
+.work.is-list.list-in .row{ border-color:var(--ink); }
+.work.is-list .tiles{ transform:none; }
+.work.is-list .tile:not(.key), .work.is-list .cap{ display:none; }
+.work.is-list .tile.key{
+  grid-column:var(--c);
+  width:var(--key); justify-self:center;
+}
+.work.is-list .meta{
+  display:block; position:absolute; top:1.25vw;
+  font-size:var(--t20); font-weight:600; line-height:1.7;         /* 34 px */
+  opacity:0; transition:opacity 450ms ease;
+  /* texto a la derecha de la foto (columnas 1 y 2) */
+  left:calc((var(--c) - .5) * ((100% - 3 * var(--gap)) / 4) + (var(--c) - 1) * var(--gap) + var(--key) / 2 + var(--kgap));
+}
+/* … o a su izquierda, alineado a la derecha (columnas 3 y 4) */
+.work.is-list .row.txt-l .meta{
+  left:auto; text-align:right;
+  right:calc(100% - ((var(--c) - .5) * ((100% - 3 * var(--gap)) / 4) + (var(--c) - 1) * var(--gap)) + var(--key) / 2 + var(--kgap));
+}
+.work.is-list.list-in .meta{ opacity:1; }
+.meta p{ margin:0; white-space:nowrap; }
+
+/* en List toda la fila es un enlace a la ficha del proyecto */
+.row-link{ display:none; }
+.work.is-list .row-link{ display:block; position:absolute; inset:0; z-index:2; }
+.work.is-list .row-link:focus-visible{ outline:2px solid var(--ink); outline-offset:-2px; }
+
+@media (max-width:700px){
+  :root{ --t20:.78rem; --key:30vw; --kgap:14px; }
+  .tiles{ grid-template-columns:repeat(2,1fr); }
+  .intro{ flex-direction:column-reverse; margin:clamp(110px,32vw,160px) var(--pad) 0; gap:1rem; }
+  .lede{ width:auto; }
+  .ttl{ align-self:flex-end; font-size:clamp(1.1rem,5.4vw,1.9rem); }
+  .view{ margin-left:var(--pad); }
+  .view{ margin-top:8vw; gap:.9rem; }
+  .row{ margin-bottom:1.6rem; }
+  .cap{ gap:.7rem; }
+  /* en List la foto siempre va a la izquierda y el texto al lado */
+  .work.is-list .row{
+    padding:12px 0;
+    display:grid; grid-template-columns:var(--key) 1fr; column-gap:var(--kgap); align-items:start;
+  }
+  .work.is-list .tiles{ display:block; }
+  .work.is-list .tile.key{ width:100%; }
+  .work.is-list .meta, .work.is-list .row.txt-l .meta{ position:static; text-align:left; }
+  .meta p{ white-space:normal; }
+}
+@media (prefers-reduced-motion:reduce){
+  .tiles, .tile img, .tile video, .cap, .tile, .meta, .work.is-list .row{ transition-duration:1ms; }
+  .row.hot .tiles, .row.hot .tile img, .row.hot .tile video{ transform:none; }
+}

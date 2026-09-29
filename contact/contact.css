@@ -1,0 +1,72 @@
+/* 
+   ANTONIO FRANCO: Contact (Figma "Desktop 114", 1440 × 802)
+   Una pantalla: la foto de arriba abajo algo a la izquierda
+   del centro, los datos a su izquierda (alineados a la
+   derecha) y la nota con el email a su derecha.
+ */
+*{ box-sizing:border-box; }
+body{
+  margin:0; background:var(--bg); color:#000;
+  font-family:var(--f-display); font-variation-settings:"opsz" 14;
+  -webkit-font-smoothing:antialiased;
+}
+.visually-hidden{
+  position:absolute; width:1px; height:1px; overflow:hidden;
+  clip:rect(0 0 0 0); white-space:nowrap;
+}
+
+.contact{
+  height:100svh; min-height:560px;
+  display:grid; align-items:center;
+  /* datos hasta x = 428 · foto de 478 a 833 (355 px) · nota desde 883 */
+  grid-template-columns:29.72vw 24.65vw 1fr;
+  column-gap:var(--side);
+}
+
+/* los datos, alineados a la derecha contra la foto */
+.facts{
+  list-style:none; margin:0; padding:0;
+  display:flex; flex-direction:column; align-items:flex-end; gap:1.94vw;   /* cada 52 px */
+  font-weight:500; font-size:clamp(.95rem,1.389vw,1.35rem);               /* 20 px */
+  line-height:1.21; text-align:right;
+}
+
+/* la foto: el encuadre de la maqueta */
+.photo{ position:relative; overflow:hidden; height:100%; margin:0; }
+.photo img{
+  position:absolute; max-width:none;
+  width:229.93%; height:181.54%; left:-86.21%; top:-24.18%;
+  object-fit:cover;
+}
+
+.note{ max-width:30.4vw; }
+.quote{
+  margin:0 0 3.33vw; max-width:27.15vw;       /* 391 px */
+  font-weight:400; font-size:clamp(.95rem,1.389vw,1.35rem); line-height:1.21;
+}
+.text{
+  margin:0 0 3.2vw;                           /* 438 px de ancho */
+  font-weight:400; font-size:var(--t16); line-height:1.21;
+}
+.mail{
+  font-weight:500; font-size:var(--t24);
+  color:inherit;
+  text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:.14em;
+  text-decoration-color:transparent; transition:text-decoration-color 240ms ease;
+}
+.mail:hover{ text-decoration-color:currentColor; }
+.mail:focus-visible{ outline:2px solid currentColor; outline-offset:3px; }
+
+@media (max-width:860px){
+  .contact{
+    height:auto; min-height:0;
+    grid-template-columns:1fr; row-gap:2.2rem;
+    padding:clamp(110px,30vw,150px) 18px 3.5rem;
+  }
+  .photo{ order:-1; height:auto; aspect-ratio:3/4; }
+  .photo img{ width:100%; height:100%; left:0; top:0; object-position:60% 30%; }
+  .facts{ align-items:flex-start; text-align:left; gap:.9rem; }
+  .note, .quote{ max-width:none; }
+  .quote{ margin-bottom:1.4rem; }
+  .text{ margin-bottom:1.6rem; }
+}
