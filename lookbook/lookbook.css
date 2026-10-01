@@ -52,7 +52,7 @@ img, video{ display:block; max-width:100%; }
 .view button{
   font-family:var(--f-display); font-variation-settings:"opsz" 14;
   font-size:var(--t20); font-weight:400; color:#000;
-  background:none; border:0; padding:0; cursor:pointer;
+  background-color:transparent; border:0; padding:0; cursor:pointer;
 }
 .view button[aria-pressed="true"]{ font-weight:700; }
 .view button:focus-visible{ outline:2px solid var(--ink); outline-offset:3px; }
@@ -153,7 +153,9 @@ img, video{ display:block; max-width:100%; }
   .view{ margin-left:var(--pad); }
   .view{ margin-top:8vw; gap:.9rem; }
   .row{ margin-bottom:1.6rem; }
-  .cap{ gap:.7rem; }
+  /* los pies largos se parten en vez de salirse de la pantalla */
+  .cap, .row.hot .cap{ width:100%; flex-wrap:wrap; justify-content:flex-start; gap:.1rem .7rem; }
+  .cap span{ white-space:normal; }
   /* en List la foto siempre va a la izquierda y el texto al lado */
   .work.is-list .row{
     padding:12px 0;

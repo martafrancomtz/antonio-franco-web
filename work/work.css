@@ -123,15 +123,20 @@ img, video{ display:block; max-width:100%; }
   .piece{ --edge:18px; --col-gap:10px; display:flex; flex-direction:column; padding-bottom:3rem; }
   .reel, .reel-pin{ display:contents; }
   .piece-head{ order:1; flex-direction:column; gap:.4rem; padding-top:clamp(110px,30vw,150px); margin-bottom:0; }
+  .piece-tag{ flex-wrap:wrap; white-space:normal; gap:.15rem 1rem; }
   .facts{ order:2; grid-template-columns:1fr; gap:2rem; padding-top:2.2rem; }
   .facts section{ max-width:none; }
   .facts h2{ margin-bottom:.7rem; }
   .spec{ grid-template-columns:7.5rem 1fr; row-gap:.6rem; }
   .track-wrap{
-    order:3; flex:none; height:68svh; margin-top:2.5rem; padding-bottom:0;
+    order:3; flex:none; height:min(58svh, 135vw); margin-top:2.5rem; padding-bottom:0;
     overflow-x:auto; overflow-y:hidden; touch-action:pan-x pan-y;
     scrollbar-width:none; overscroll-behavior-x:contain;
+    /* al soltar, la tira se para con una foto centrada y entera */
+    scroll-snap-type:x mandatory;
   }
+  .track-wrap.grabbing{ scroll-snap-type:none; }        /* mientras se arrastra con el ratón */
+  .item{ scroll-snap-align:center; max-width:calc(100vw - 2 * var(--edge)); }
   .track-wrap::-webkit-scrollbar{ display:none; }
   .pager{ order:4; margin-top:3.5rem; }
   .pager .prev, .pager .next{ margin:0 0 .8rem; }

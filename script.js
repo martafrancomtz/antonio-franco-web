@@ -81,6 +81,29 @@
   window.addEventListener('scroll', req, {passive:true});
   window.addEventListener('resize', function(){ height(); req(); });
   req();
+
+  /* pantallas pequeñas: que ninguna foto se quede a medias
+     Cuando el scroll se para dentro del tramo de fotos, se termina
+     el pase con suavidad hasta la foto más cercana. */
+  var small = window.matchMedia('(max-width: 860px)');
+  var touching = false, settle = null, snapping = false;
+  function snap(){
+    settle = null;
+    if (!small.matches || touching) return;
+    var vh = window.innerHeight, step = STEP * vh;
+    var top = work.getBoundingClientRect().top;
+    var u = -top / step;
+    if (u <= 0.02 || u >= N - 1 - 0.02) return;            /* fuera del tramo o ya en la última */
+    var k = Math.round(u);
+    var d = (u - k) * step;                                 /* px que faltan para cuadrar */
+    if (Math.abs(d) < 2) { snapping = false; return; }
+    snapping = true;
+    window.scrollTo({ top: window.scrollY - d, behavior: 'smooth' });
+  }
+  function later(){ clearTimeout(settle); settle = setTimeout(snap, snapping ? 260 : 140); }
+  window.addEventListener('scroll', later, {passive:true});
+  window.addEventListener('touchstart', function(){ touching = true; snapping = false; clearTimeout(settle); }, {passive:true});
+  window.addEventListener('touchend', function(){ touching = false; later(); }, {passive:true});
 })();
 
 /* la pastilla "View" */

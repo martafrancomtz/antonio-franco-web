@@ -116,41 +116,58 @@ html.is-intro.leaving .loader{ opacity:0; transition:opacity 900ms ease; }
 .site-foot a{ color:inherit; width:fit-content; }   /* la línea del hover, solo bajo el texto */
 .site-foot a:focus-visible{ outline:2px solid currentColor; outline-offset:3px; }
 
-/* la línea de los botones
-   Se dibuja como fondo del propio texto, así subraya cada renglón
-   por separado aunque el texto se parta en dos líneas, y se pinta
-   siempre igual de gruesa.
-   · Sin línea en reposo: al pasar el ratón entra desde la
-     izquierda; al salir, se va por la derecha.
-   · Con línea en reposo (la página actual, los enlaces de texto):
-     al pasar el ratón se va por la derecha y entra una nueva desde
-     la izquierda.                                                 */
-:is(.bar-nav a, .site-foot a, .mail, .more a, .view button, .pager a > span, .ttl .u){
-  text-decoration:none;
-  background-image:linear-gradient(currentColor, currentColor);
-  background-repeat:no-repeat;
-  background-size:0% 2px;
-  background-position:100% calc(100% - .06em);
-  -webkit-box-decoration-break:clone; box-decoration-break:clone;
-  transition:background-size .4s ease .1s;
+/* la línea de los botones, tipo skip ink
+   site.js pone dentro de cada botón una copia de su texto (.ink),
+   invisible, con un subrayado de verdad: así la línea se corta
+   alrededor de las letras con cola (g, p, y…), como skip ink, y
+   subraya cada renglón aunque el texto ocupe dos líneas.
+   Una máscara descubre ese subrayado como en la v1:
+   · sin línea en reposo: al pasar el ratón entra desde la
+     izquierda; al salir, se va por la derecha;
+   · con línea en reposo (la página actual, los enlaces de texto):
+     al pasar el ratón se va por la derecha y vuelve desde la izquierda. */
+.has-ink{ position:relative; display:inline-block; text-decoration:none; }
+.ink{
+  /* un poco más alta que el texto: la línea queda por debajo de las
+     letras y la máscara solo pinta dentro de esta caja */
+  position:absolute; top:0; left:0; right:0; bottom:-.4em; z-index:1;
+  pointer-events:none; -webkit-user-select:none; user-select:none;
+  /* letras invisibles y línea del color del botón. (Chrome pinta el
+     subrayado con el relleno de las letras: por eso el color de la
+     línea va aparte, en --ink-c, que pone site.js.) */
+  color:transparent;
+  text-decoration-line:underline;
+  text-decoration-color:var(--ink-c, currentColor);
+  text-decoration-thickness:2px;
+  text-underline-offset:.14em;
+  text-decoration-skip-ink:auto;
+  -webkit-mask-image:linear-gradient(#000,#000); mask-image:linear-gradient(#000,#000);
+  -webkit-mask-repeat:no-repeat;                mask-repeat:no-repeat;
+  -webkit-mask-size:0% 100%;                    mask-size:0% 100%;
+  -webkit-mask-position:100% 0;                 mask-position:100% 0;
+  transition:-webkit-mask-size .4s ease .1s, mask-size .4s ease .1s;
 }
-:is(.bar-nav a, .site-foot a, .mail, .more a, .view button):is(:hover, :focus-visible),
-.pager a:is(:hover, :focus-visible) > span,
-.ttl a:is(:hover, :focus-visible) .u{
-  background-size:100% 2px; background-position-x:0%;
+.has-ink:is(:hover, :focus-visible) > .ink,
+.pager a:is(:hover, :focus-visible) > span > .ink,
+.ttl a:is(:hover, :focus-visible) .u > .ink{
+  -webkit-mask-size:100% 100%; mask-size:100% 100%;
+  -webkit-mask-position:0 0;   mask-position:0 0;
 }
 /* con línea en reposo */
-.bar-nav a[aria-current="page"], .more a{ background-size:100% 2px; background-position-x:0%; }
-.bar-nav a[aria-current="page"]:is(:hover, :focus-visible),
-.more a:is(:hover, :focus-visible){ animation:v1-line .8s ease; }
+.bar-nav a[aria-current="page"] > .ink, .more a > .ink{
+  -webkit-mask-size:100% 100%; mask-size:100% 100%;
+  -webkit-mask-position:0 0;   mask-position:0 0;
+}
+.bar-nav a[aria-current="page"]:is(:hover, :focus-visible) > .ink,
+.more a:is(:hover, :focus-visible) > .ink{ animation:v1-line .8s ease; }
 @keyframes v1-line{
-  0%   { background-size:100% 2px; background-position-x:100%; }
-  45%  { background-size:0% 2px;   background-position-x:100%; }
-  55%  { background-size:0% 2px;   background-position-x:0%; }
-  100% { background-size:100% 2px; background-position-x:0%; }
+  0%   { -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-position:100% 0; mask-position:100% 0; }
+  45%  { -webkit-mask-size:0% 100%;   mask-size:0% 100%;   -webkit-mask-position:100% 0; mask-position:100% 0; }
+  55%  { -webkit-mask-size:0% 100%;   mask-size:0% 100%;   -webkit-mask-position:0 0;    mask-position:0 0; }
+  100% { -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-position:0 0;    mask-position:0 0; }
 }
 @media (prefers-reduced-motion:reduce){
-  :is(.bar-nav a, .site-foot a, .mail, .more a, .view button, .pager a > span, .ttl .u){ transition:none; animation:none !important; }
+  .ink{ transition:none; animation:none !important; }
 }
 
 /* menú hamburguesa (pantallas pequeñas)
@@ -199,7 +216,7 @@ html.is-intro.leaving .loader{ opacity:0; transition:opacity 900ms ease; }
     font-family:var(--f-display); font-weight:500; font-variation-settings:"opsz" 14;
     font-size:clamp(2.2rem,11vw,3.4rem); line-height:1.1; text-shadow:none;
     opacity:0; transform:translateY(30%);
-    transition:opacity 500ms ease, transform 700ms var(--ease);
+    transition:opacity 500ms ease, transform 700ms var(--ease), background-size .4s ease .1s;
     view-transition-name:none;
   }
   .bar.menu-open .bar-nav a{ opacity:1; transform:none; }

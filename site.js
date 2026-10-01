@@ -10,6 +10,28 @@
        · si se llega desde otra página con View Transition, el estado
          se pone antes de pintar y la transición lleva el menú;
        · si no, el menú arranca compacto y se abre después.        */
+/* la línea skip ink de los botones (ver site.css)
+   Dentro de cada botón, una copia invisible de su texto que lleva
+   el subrayado de verdad. aria-hidden: los lectores de pantalla no
+   lo leen dos veces. */
+(function(){
+  var sel = '.bar-nav a, .site-foot a, .mail, .more a, .view button, .pager a > span, .ttl .u';
+  var els = [].slice.call(document.querySelectorAll(sel));
+  els.forEach(function(el){
+    if (el.classList.contains('has-ink')) return;
+    var ink = document.createElement('span');
+    ink.className = 'ink';
+    ink.setAttribute('aria-hidden', 'true');
+    ink.innerHTML = el.innerHTML;
+    el.classList.add('has-ink');
+    el.appendChild(ink);
+  });
+  /* el color de la línea = el del texto del botón */
+  function paint(){ els.forEach(function(el){ el.style.setProperty('--ink-c', getComputedStyle(el).color); }); }
+  paint();
+  var t; window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(paint, 150); });
+})();
+
 /* menú hamburguesa (pantallas pequeñas; lo muestra site.css) */
 (function(){
   var bar = document.getElementById('bar');

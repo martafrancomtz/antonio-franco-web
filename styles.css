@@ -94,19 +94,6 @@ img{ display:block; max-width:100%; }
 }
 .ttl a:focus-visible{ outline:2px solid var(--ink); outline-offset:6px; }
 /* la línea del hover va en site.css, solo bajo el texto */
-/* la flecha solo asoma al señalar el título */
-.arw{
-  display:inline-block; overflow:hidden;
-  width:0; height:.62em; margin-left:0;
-  vertical-align:-.04em; opacity:0;
-  transition:width 400ms var(--ease),
-             margin-left 400ms var(--ease),
-             opacity 240ms ease 60ms;
-}
-.arw svg{ width:.62em; height:.62em; display:block; }
-.ttl a:hover .arw, .ttl a:focus-visible .arw{
-  width:.62em; margin-left:.22em; opacity:1;
-}
 
 .foot{
   position:absolute; left:var(--tx); right:clamp(16px,2.5vw,36px);
