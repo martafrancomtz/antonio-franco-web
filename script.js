@@ -82,14 +82,39 @@
   window.addEventListener('resize', function(){ height(); req(); });
   req();
 
-  /* pantallas pequeñas: que ninguna foto se quede a medias
+  /* que ninguna foto se quede a medias
      Cuando el scroll se para dentro del tramo de fotos, se termina
-     el pase con suavidad hasta la foto más cercana. */
+     el pase con suavidad hasta la foto más cercana. En pantalla
+     grande se espera algo más: la rueda del ratón da saltos más
+     espaciados que el dedo y no hay que tirar mientras aún gira. */
   var small = window.matchMedia('(max-width: 860px)');
   var touching = false, settle = null, snapping = false;
+  var tween = null;                 /* la animación propia de pantalla grande */
+
+  /* En pantalla grande el scroll suave del navegador no es fiable
+     justo después de la rueda (algunos lo ignoran o lo cortan), así
+     que el ajuste se anima aquí, fotograma a fotograma. */
+  function glide(to){
+    var from = window.scrollY, dist = to - from;
+    var dur = Math.min(700, Math.max(380, Math.abs(dist) * 1.1));
+    var t0 = null;
+    tween = { stop:false };
+    var me = tween;
+    function f(now){
+      if (me.stop) return;
+      if (t0 === null) t0 = now;
+      var p = Math.min(1, (now - t0) / dur);
+      var e = p < .5 ? 4*p*p*p : 1 - Math.pow(-2*p + 2, 3) / 2;
+      window.scrollTo(0, from + dist * e);
+      if (p < 1) requestAnimationFrame(f); else { tween = null; snapping = false; }
+    }
+    requestAnimationFrame(f);
+  }
+  function cancelGlide(){ if (tween){ tween.stop = true; tween = null; snapping = false; } }
+
   function snap(){
     settle = null;
-    if (!small.matches || touching) return;
+    if (touching || tween) return;
     var vh = window.innerHeight, step = STEP * vh;
     var top = work.getBoundingClientRect().top;
     var u = -top / step;
@@ -98,12 +123,21 @@
     var d = (u - k) * step;                                 /* px que faltan para cuadrar */
     if (Math.abs(d) < 2) { snapping = false; return; }
     snapping = true;
-    window.scrollTo({ top: window.scrollY - d, behavior: 'smooth' });
+    if (small.matches) window.scrollTo({ top: window.scrollY - d, behavior: 'smooth' });
+    else glide(window.scrollY - d);
   }
-  function later(){ clearTimeout(settle); settle = setTimeout(snap, snapping ? 260 : 140); }
+  function later(){
+    if (tween) return;                                      /* el scroll lo está moviendo el ajuste */
+    clearTimeout(settle);
+    settle = setTimeout(snap, snapping ? 260 : (small.matches ? 140 : 240));
+  }
   window.addEventListener('scroll', later, {passive:true});
-  window.addEventListener('touchstart', function(){ touching = true; snapping = false; clearTimeout(settle); }, {passive:true});
+  window.addEventListener('touchstart', function(){ touching = true; snapping = false; cancelGlide(); clearTimeout(settle); }, {passive:true});
   window.addEventListener('touchend', function(){ touching = false; later(); }, {passive:true});
+  /* si la persona vuelve a mover la rueda, pulsa una tecla o hace clic, manda ella */
+  ['wheel', 'keydown', 'mousedown'].forEach(function(ev){
+    window.addEventListener(ev, function(){ if (tween){ cancelGlide(); later(); } }, {passive:true});
+  });
 })();
 
 /* la pastilla "View" */
